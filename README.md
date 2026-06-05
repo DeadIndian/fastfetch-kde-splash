@@ -1,4 +1,4 @@
-# Fastfetch KDE Splash v1.4
+<h1 align="center">Fastfetch KDE Splash v1.5</h1>
 
 <p align="center">
   <img src="contents/previews/splash.png" alt="Fastfetch Splash Preview" width="100%">
@@ -16,16 +16,34 @@
     </tr>
   </table>
 </div>
-This project is a "hacker/matrix style" splash animation for KDE Plasma that displays real-time system information using the `fastfetch` tool.
 
-[English](README.md) | [Türkçe](README.tr.md)
+<p align="center">
+  A "hacker/matrix style" splash animation for KDE Plasma using <code>fastfetch</code>.
+</p>
 
-## 🌟 Features
+<p align="center">
+  <strong><a href="README.md">English</a></strong> | <strong><a href="README.tr.md">Türkçe</a></strong>
+</p>
+
+<p align="center">
+  <a href="https://kde.org/plasma-desktop/"><img src="https://img.shields.io/badge/KDE_Plasma-5%20%7C%206-blue?logo=kde&logoColor=white" alt="KDE Plasma"></a>
+  <a href="https://doc.qt.io/qt-6/qmlapplications.html"><img src="https://img.shields.io/badge/QML-Qt5%20%7C%20Qt6-41CD52?logo=qt&logoColor=white" alt="QML"></a>
+  <a href="https://www.gnu.org/software/bash/"><img src="https://img.shields.io/badge/Bash-Script-4EAA25?logo=gnu-bash&logoColor=white" alt="Bash"></a>
+  <a href="https://github.com/fastfetch-cli/fastfetch"><img src="https://img.shields.io/badge/Fastfetch-System%20Info-ff69b4" alt="Fastfetch"></a>
+</p>
+
+### 🌟 Features
 
 *   **Color Selection:** Freely choose any theme color you want.
 *   **Logo & Info Layouts:** Choose between logo-only or "full" mode with all details.
 *   **Background Settings:** Set the background color or make it transparent.
-*   **Stylish Animation:** Be greeted by a modern effect where characters appear one by one during system startup.
+*   **Adjustable Animation Speeds (v1.5):** Choose between Normal, Fast, and Slow during installation.
+
+### 📋 Requirements
+
+*   **KDE Plasma:** Version 5 or 6.
+*   **Fastfetch:** Must be installed on your system.
+*   **Qt5Compat.GraphicalEffects:** Required for visual effects.
 
 ## 🛠️ Installation and Configuration
 
@@ -61,19 +79,24 @@ nano ~/.local/share/plasma/look-and-feel/fastfetch-splash/contents/splash/Splash
 
 *   Open the `Splash.qml` file.
 *   Set `property bool isConfigured` to `true`.
-*   Customize `themeColor`, `displayMode`, and `bgColor` values according to your preference.
+*   Customize `themeColor`, `displayMode`, `bgColor`, and **Animation Speed** settings (`glitchInterval`, `introDuration`, etc.) according to your preference. Each property is documented with comments inside the file.
 
-## 📋 Requirements
-
-*   **KDE Plasma:** Version 5 or 6.
-*   **Fastfetch:** Must be installed on your system.
-*   **Qt5Compat.GraphicalEffects:** Required for visual effects.
-
-## 🚀 Usage
+### 🚀 Usage
 
 1.  Open **System Settings**.
 2.  Go to the **Appearance > Splash Screen** tab.
 3.  Select **fastfetch-splash** from the list and click **Apply**.
+
+## Development and Quick Test
+
+You can quickly test the splash screen using `ksplashqml`. From the project directory:
+
+```bash
+# make sure the path is correct
+ksplashqml /home/fastfetch-kde-splash
+```
+
+> **Note:** Make sure to set `isConfigured` to `true` in `Splash.qml` before testing.
 
 ## 🛠️ Troubleshooting
 
@@ -82,6 +105,8 @@ nano ~/.local/share/plasma/look-and-feel/fastfetch-splash/contents/splash/Splash
 *   **"'fastfetch' returned empty output" Error:** The command is running but not returning any output. Verify that `fastfetch` works correctly in your terminal.
 *   **Visual Glitches/Issues:** If effects (neon glow, glitch, etc.) are invisible, ensure that the `Qt5Compat.GraphicalEffects` package is installed.
 
-## 📄 License
+<div align="center">
 
-Protected under the MIT License.
+## [MIT](LICENSE) Licensed
+
+</div>

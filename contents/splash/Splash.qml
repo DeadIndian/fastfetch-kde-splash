@@ -6,20 +6,58 @@ Rectangle {
     id: root
     color: bgColor 
 
-    // Bu değerler install.sh tarafından değiştirilebilir
-    property bool isConfigured: false // Kurulum betiği çalıştırıldı mı kontrolü
-    property string themeColor: "#ff0000" //text metin rengi
-    property string displayMode: "logo" // "logo" veya "full"
-    property string bgColor: "#000000" // Arkaplan rengi veya şeffaf "transparent"
+    // =========================================================================
+    // CONFIGURATION
+    // These values are automatically modified by the 'install.sh' script.
+    // =========================================================================
 
+    // Checks if the installation script has been run. Must be 'true' for the splash to work.
+    property bool isConfigured: false
+
+    // The main color used for the text and drop shadow glow (HEX code, e.g., "#ff0000").
+    property string themeColor: "#ff0000" 
+
+    // Layout mode. "logo" shows only the OS logo. "full" shows the logo + system information. "info" shows only system information.
+    property string displayMode: "logo" 
+
+    // Background color of the splash screen. Use a HEX code (e.g., "#000000") or "transparent".
+    property string bgColor: "#000000" 
+
+    // =========================================================================
+    // ANIMATION SPEED SETTINGS
+    // These settings do not change the overall splash duration. The splash
+    // ends as soon as the KDE desktop is loaded.
+    // =========================================================================
+
+    // The interval (in milliseconds) for the character reveal glitch timer. Smaller = faster.
+    property int glitchInterval: 30       
+
+    // Duration (in milliseconds) of the fade-in animation when the splash starts.
+    property int introDuration: 800       
+
+    // Duration (in milliseconds) of the fade-out animation before the desktop appears.
+    property int exitDuration: 1500       
+
+    // The minimum amount of time (in milliseconds) the splash screen will stay visible.
+    property int minSplashDuration: 4000  
+
+    // Divisor used to calculate how many characters reveal per frame. Smaller = faster.
+    property int frameDivisor: 50         
+    
+    // =========================================================================
+    // END OF CONFIGURATION
+    // From this point onwards, internal variables are defined. Do not modify.
+    // =========================================================================
+
+    // Raw string data received from fastfetch.
     property string logoData: ""
     property string infoData: ""
     
-    // Ekranda gösterilen anlık veriler
+    // Current strings being displayed (revealed characters).
     property string displayedLogoData: ""
     property string displayedInfoData: ""
     
-    // Animasyon durum değişkenleri
+    // Animation state and index tracking variables.
     property var logoIndices: []
     property var infoIndices: []
     property int logoAnimStep: 0
@@ -27,13 +65,14 @@ Rectangle {
     property int charsPerFrameLogo: 1
     property int charsPerFrameInfo: 1
 
+    // Status flags for loading and errors.
     property bool logoLoaded: false
     property bool infoLoaded: false
     property bool errorOccurred: false
     property int stage: 0
     property bool minDurationMet: false
 
-    // Karakterleri karıştırma fonksiyonu (Fisher-Yates) // ...
+    // Fisher-Yates character shuffling function
 
     function shuffleArray(array) {
         for (var i = array.length - 1; i > 0; i--) {
@@ -44,7 +83,7 @@ Rectangle {
         }
     }
 
-    // Şeffaf karakterler oluşturma
+    // Create transparent string
     function initDisplayString(length) {
         var str = "";
         for (var i = 0; i < length; i++) {
@@ -53,7 +92,7 @@ Rectangle {
         return str;
     }
 
-    // String üzerinde belirli indeksteki karakteri değiştirme
+    // Set character at specific index in string
     function setCharAt(str, index, chr) {
         if (index > str.length - 1) return str;
         return str.substring(0, index) + chr + str.substring(index + 1);
@@ -61,7 +100,7 @@ Rectangle {
 
     Timer {
         id: minDurationTimer
-        interval: 4000
+        interval: minSplashDuration
         running: false
         onTriggered: {
             minDurationMet = true;
@@ -71,16 +110,16 @@ Rectangle {
         }
     }
 
-    // Rastgele metin belirme efekti Timer'ı
+    // Random text reveal effect timer
     Timer {
         id: glitchAnimTimer
-        interval: 30
+        interval: glitchInterval
         running: false
         repeat: true
         onTriggered: {
             var finished = true;
 
-            // Logo animasyonu
+            // Logo animation
             if (root.logoAnimStep < root.logoIndices.length) {
                 finished = false;
                 var currentLogoData = root.displayedLogoData;
@@ -92,8 +131,8 @@ Rectangle {
                 root.displayedLogoData = currentLogoData;
             }
 
-            // Info animasyonu
-            if (root.displayMode === "full" && root.infoAnimStep < root.infoIndices.length) {
+            // Info animation
+            if ((root.displayMode === "full" || root.displayMode === "info") && root.infoAnimStep < root.infoIndices.length) {
                 finished = false;
                 var currentInfoData = root.displayedInfoData;
                 for (var j = 0; j < root.charsPerFrameInfo && root.infoAnimStep < root.infoIndices.length; j++) {
@@ -110,13 +149,13 @@ Rectangle {
         }
     }
 
-    // Güvenlik Zamanlayıcısı
+    // Safety timer
     Timer {
         id: safetyTimer
         interval: 3000
         running: true
         onTriggered: {
-            var isReady = root.displayMode === "logo" ? root.logoLoaded : (root.logoLoaded && root.infoLoaded);
+            var isReady = root.displayMode === "logo" ? root.logoLoaded : (root.displayMode === "info" ? root.infoLoaded : (root.logoLoaded && root.infoLoaded));
             if (!isReady) {
                 showError("'fastfetch' not found or could not be executed.\nPlease make sure the package is installed.");
             }
@@ -146,7 +185,7 @@ Rectangle {
     }
 
     function startEffects() {
-        // Logo Ayarları
+        // Logo settings
         root.logoIndices = [];
         for (var i = 0; i < root.logoData.length; i++) {
             if (root.logoData.charAt(i) !== ' ' && root.logoData.charAt(i) !== '\n' && root.logoData.charAt(i) !== '\r') {
@@ -154,11 +193,11 @@ Rectangle {
             }
         }
         shuffleArray(root.logoIndices);
-        root.displayedLogoData = root.logoData.replace(/[^\r\n]/g, " ");
-        root.charsPerFrameLogo = Math.max(1, Math.ceil(root.logoIndices.length / 50)); 
+        root.displayedLogoData = root.logoData.replace(/[^\r\n]/g, " ");
+        root.charsPerFrameLogo = Math.max(1, Math.ceil(root.logoIndices.length / root.frameDivisor)); 
 
-        // Info Ayarları
-        if (root.displayMode === "full") {
+        // Info settings
+        if (root.displayMode === "full" || root.displayMode === "info") {
             root.infoIndices = [];
             for (var j = 0; j < root.infoData.length; j++) {
                 if (root.infoData.charAt(j) !== ' ' && root.infoData.charAt(j) !== '\n' && root.infoData.charAt(j) !== '\r') {
@@ -166,8 +205,8 @@ Rectangle {
                 }
             }
             shuffleArray(root.infoIndices);
-            root.displayedInfoData = root.infoData.replace(/[^\r\n]/g, " "); 
-            root.charsPerFrameInfo = Math.max(1, Math.ceil(root.infoIndices.length / 50));
+            root.displayedInfoData = root.infoData.replace(/[^\r\n]/g, " "); 
+            root.charsPerFrameInfo = Math.max(1, Math.ceil(root.infoIndices.length / root.frameDivisor));
         }
 
         introAnimation.start();
@@ -208,7 +247,7 @@ Rectangle {
                 root.infoLoaded = true;
             }
             
-            var isReady = root.displayMode === "logo" ? root.logoLoaded : (root.logoLoaded && root.infoLoaded);
+            var isReady = root.displayMode === "logo" ? root.logoLoaded : (root.displayMode === "info" ? root.infoLoaded : (root.logoLoaded && root.infoLoaded));
             
             if (isReady && !root.errorOccurred) {
                 safetyTimer.stop();
@@ -231,8 +270,9 @@ Rectangle {
             anchors.centerIn: parent
             spacing: 50
             
-            // LOGO BÖLÜMÜ
+            // LOGO SECTION
             Item {
+                visible: root.displayMode !== "info"
                 width: logoText.implicitWidth
                 height: logoText.implicitHeight
                 anchors.verticalCenter: parent.verticalCenter
@@ -256,7 +296,7 @@ Rectangle {
                     source: logoText
                     transparentBorder: true
                     color: root.themeColor
-                    radius: 8   // İç parlama (Keskin)
+                    radius: 8   // Inner glow (Sharp)
                     samples: 16
                 }
 
@@ -265,15 +305,15 @@ Rectangle {
                     source: logoText
                     transparentBorder: true
                     color: root.themeColor
-                    radius: 25  // Dış parlama (Aura)
+                    radius: 25  // Outer glow (Aura)
                     samples: 30
                     opacity: 0.6
                 }
             }
 
-            // BİLGİ BÖLÜMÜ
+            // INFO SECTION
             Item {
-                visible: root.displayMode === "full"
+                visible: root.displayMode === "full" || root.displayMode === "info"
                 width: infoText.implicitWidth
                 height: infoText.implicitHeight
                 anchors.verticalCenter: parent.verticalCenter
@@ -294,7 +334,7 @@ Rectangle {
                     source: infoText
                     transparentBorder: true
                     color: root.themeColor
-                    radius: 6   // İç parlama
+                    radius: 6   // Inner glow
                     samples: 12
                 }
 
@@ -303,7 +343,7 @@ Rectangle {
                     source: infoText
                     transparentBorder: true
                     color: root.themeColor
-                    radius: 20  // Dış parlama
+                    radius: 20  // Outer glow
                     samples: 24
                     opacity: 0.6
                 }
@@ -316,7 +356,7 @@ Rectangle {
         target: content
         from: 0
         to: 1
-        duration: 800 // Faster fade in
+        duration: introDuration // Faster fade in
         easing.type: Easing.InOutQuad
     }
 
@@ -325,7 +365,7 @@ Rectangle {
         target: root
         from: 1
         to: 0
-        duration: 1500 // Smoother fade out
+        duration: exitDuration // Smoother fade out
         easing.type: Easing.InOutQuad
     }
 
@@ -336,7 +376,7 @@ Rectangle {
         }
 
         executable.exec("fastfetch --structure L --pipe")
-        if (root.displayMode === "full") {
+        if (root.displayMode === "full" || root.displayMode === "info") {
             executable.exec("fastfetch --logo none --pipe")
         }
     }

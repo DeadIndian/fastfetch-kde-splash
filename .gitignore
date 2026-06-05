@@ -16,3 +16,9 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.log
+
+# Archives
+Arşiv.tar.gz
+
+#files
+kde-store-description.txt
