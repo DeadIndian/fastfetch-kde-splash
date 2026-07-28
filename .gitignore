@@ -16,3 +16,7 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.log
+
+# GitHub Actions artifacts
+*.plasmashell
+*.zip

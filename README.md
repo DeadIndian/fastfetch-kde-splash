@@ -1,7 +1,7 @@
-# Fastfetch KDE Splash v1.4
+# Fork Fastfetch KDE Splash v1.5
 
 <p align="center">
-  <img src="contents/previews/splash.png" alt="Fastfetch Splash Preview" width="100%">
+  <img src="contents/previews/splash.png" alt="Fork Fastfetch Splash Preview" width="100%">
 </p>
 
 <div align="center">
@@ -16,15 +16,15 @@
     </tr>
   </table>
 </div>
-This project is a "hacker/matrix style" splash animation for KDE Plasma that displays real-time system information using the `fastfetch` tool.
+This fork of Fastfetch KDE Splash is a "hacker/matrix style" splash animation for KDE Plasma that displays real-time system information using the `fastfetch` tool. It's a fork of the original by [herzane](https://www.herzane.tr) with community contributions.
 
 [English](README.md) | [Türkçe](README.tr.md)
 
 ## 🌟 Features
 
-*   **Color Selection:** Freely choose any theme color you want.
-*   **Logo & Info Layouts:** Choose between logo-only or "full" mode with all details.
-*   **Background Settings:** Set the background color or make it transparent.
+*   **Enhanced Color Selection:** Freely choose any theme color you want.
+*   **Flexible Layout Options:** Choose between logo-only, "full", or "sequential" modes.
+*   **Background Customization:** Set the background color or make it transparent.
 *   **Stylish Animation:** Be greeted by a modern effect where characters appear one by one during system startup.
 
 ## 🛠️ Installation and Configuration
@@ -33,12 +33,12 @@ This project is a "hacker/matrix style" splash animation for KDE Plasma that dis
 
 The `install.sh` script automates everything:
 *   Asks for your preferences (color, layout, background).
-*   Copies files to the correct directory (`~/.local/share/plasma/look-and-feel/fastfetch-splash`).
+*   Copies files to the correct directory (`~/.local/share/plasma/look-and-feel/fork-fastfetch-splash`).
 *   Automatically completes the configuration.
 
 ```bash
-# to clone the repository
-git clone https://github.com/herzane52/fastfetch-kde-splash.git
+# to clone this fork repository
+git clone https://github.com/DeadIndian/fastfetch-kde-splash.git
 cd fastfetch-kde-splash
 ```
 
@@ -56,7 +56,7 @@ chmod +x install.sh
 If you installed the theme via KDE Store, you will encounter the "Configuration Required" error. To fix this, you can manually edit the following file (see lines 10-13):
 
 ```bash
-nano ~/.local/share/plasma/look-and-feel/fastfetch-splash/contents/splash/Splash.qml
+nano ~/.local/share/plasma/look-and-feel/fork-fastfetch-splash/contents/splash/Splash.qml
 ```
 
 *   Open the `Splash.qml` file.
@@ -73,7 +73,7 @@ nano ~/.local/share/plasma/look-and-feel/fastfetch-splash/contents/splash/Splash
 
 1.  Open **System Settings**.
 2.  Go to the **Appearance > Splash Screen** tab.
-3.  Select **fastfetch-splash** from the list and click **Apply**.
+3.  Select **fork-fastfetch-splash** from the list and click **Apply**.
 
 ## 🛠️ Troubleshooting
 
@@ -85,3 +85,9 @@ nano ~/.local/share/plasma/look-and-feel/fastfetch-splash/contents/splash/Splash
 ## 📄 License
 
 Protected under the MIT License.
+
+## 🆚 About This Fork
+
+This repository is a fork by **DeadIndian** making improvements to the original Fastfetch KDE Splash. It builds upon herzane's original work with additional features and fixes.
+
+Forked from [herzane52/fastfetch-kde-splash](https://github.com/herzane52/fastfetch-kde-splash)
