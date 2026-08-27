@@ -1,6 +1,6 @@
 <div align="center">
 
-# Fastfetch KDE Splash (Fork)
+# Deads Fastfetch Splash Screen (Forked)
 
 ### KDE Plasma için matris tarzı açılış ekranı — gerçek sistem bilgisi, tam renkli
 

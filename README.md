@@ -3,7 +3,7 @@
 <!-- USER: Optional logo — drop one at assets/logo.png and uncomment -->
 <!-- <img src="assets/logo.png" alt="Fastfetch KDE Splash logo" width="120" /> -->
 
-# Fastfetch KDE Splash (Fork)
+# Deads Fastfetch Splash Screen (Forked)
 
 ### Matrix-style boot splash for KDE Plasma that shows your real system info — in full color
 
