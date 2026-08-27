@@ -1,9 +1,12 @@
 name: Publish to KDE Store
 
 # Publishes a new package version to store.kde.org whenever a tag (v*) is pushed.
+# The store (KDE/ocs-server) authenticates OCS API calls with HTTP Basic auth
+# using your opendesktop account credentials — there is no API key option.
 # Requires repo secrets (Settings → Secrets and variables → Actions):
-#   OCS_API_KEY   – API key from store.kde.org → your profile → Settings → API keys
-#   OCS_PRODUCT_ID – numeric product id from your store page URL (store.kde.org/p/<ID>)
+#   OCS_USERNAME – your opendesktop.org / store.kde.org username
+#   OCS_PASSWORD – your opendesktop.org / store.kde.org password
+#   OCS_PRODUCT_ID – numeric product id from your store page URL (opendesktop.org/p/<ID>)
 on:
   push:
     tags: ['v*']
@@ -24,21 +27,23 @@ jobs:
           tar -cJf "dist/fork-fastfetch-splash-v${{ steps.ver.outputs.version }}.tar.xz" \
             metadata.json contents
 
-      - name: Upload to store.kde.org
+      - name: Upload package to store.kde.org
         env:
-          OCS_API_KEY: ${{ secrets.OCS_API_KEY }}
+          OCS_USERNAME: ${{ secrets.OCS_USERNAME }}
+          OCS_PASSWORD: ${{ secrets.OCS_PASSWORD }}
           OCS_PRODUCT_ID: ${{ secrets.OCS_PRODUCT_ID }}
           VERSION: ${{ steps.ver.outputs.version }}
         run: |
           set -euo pipefail
-          curl --fail-with-body -sS -X PUT \
-            -u "$OCS_API_KEY:" \
+          # content/uploaddownload/{id} adds a new downloadable file version
+          # to the existing product. See KDE/ocs-server controllers/v1.controller.php.
+          curl --fail-with-body -sS -X POST \
+            -u "$OCS_USERNAME:$OCS_PASSWORD" \
             -H "OCS-APIREQUEST: true" \
-            -H "Accept: application/json" \
             -F "localfile=@dist/fork-fastfetch-splash-v${VERSION}.tar.xz" \
             -F "version=${VERSION}" \
             -F "changelog=See https://github.com/DeadIndian/fastfetch-kde-splash/releases/tag/v${VERSION}" \
-            "https://share.kde.org/ocs/v1/content/edit/${OCS_PRODUCT_ID}"
+            "https://share.kde.org/ocs/v1/content/uploaddownload/${OCS_PRODUCT_ID}"
 
       - name: Upload tarball to GitHub Release
         env:

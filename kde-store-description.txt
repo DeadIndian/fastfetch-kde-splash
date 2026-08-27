@@ -1,43 +1,47 @@
 === ENGLISH ===
-Fastfetch KDE Splash Screen v1.4
+Deads Fastfetch Splash Screen (Forked) v1.8
 
-A clean and modern splash screen for KDE Plasma that uses 'fastfetch' to display system info.
+A matrix-style splash screen for KDE Plasma that uses 'fastfetch' to display your real system info — decoded character by character with a glitch animation, in full color.
+
+Fork of herzane's fastfetch-kde-splash with ANSI color support and more.
 
 FEATURES:
-- Custom Theme Colors: Choose any color you like.
-- Layout Options: Logo-only or Full System Info.
-- Background Settings: Selection of colors or transparency.
-- Smooth Opening: Beautiful character-revealing animation.
+- True ANSI Colors: Your terminal's fastfetch colors (256-color and 24-bit truecolor) preserved exactly.
+- 4 Layout Modes: Logo only, Logo + System Info (full), System Info only (info), Sequential (logo reveals, slides left, info fades in).
+- Glitch Reveal Animation: Characters decode in random order.
+- Animation Speed Control: Fast / normal / slow presets or fully custom timing.
+- Theme Color & Background: Optional glow color, any background color or transparent.
+- Multi-language Installer: English and Turkish, auto-detected.
+- Robust Error Handling: Clear error message if fastfetch is missing.
 
-MANUAL CONFIGURATION (KDE Store Users):
-If you installed this via KDE Store, you will see a "Configuration Required" message. 
-You can fix this by:
-1. Running the `install.sh` from the project folder.
-2. OR manually editing the following file (see lines 10-13):
-   `~/.local/share/plasma/look-and-feel/fastfetch-splash/contents/splash/Splash.qml`
-   - Set `property bool isConfigured: true`
-   - Change `themeColor`, `displayMode`, and `bgColor` values.
+CONFIGURATION (KDE Store Users):
+The splash works out of the box in logo mode. For full customization (color, layout, background, speed), run the interactive installer from the GitHub repository, or edit directly:
+  ~/.local/share/plasma/look-and-feel/fork-fastfetch-splash/contents/splash/Splash.qml
+  - Set `property bool isConfigured: true`
+  - Adjust `themeColor`, `glowEnabled`, `displayMode`, `bgColor`, and the animation speed properties.
 
-GitHub Repository: https://github.com/herzane52/fastfetch-kde-splash
+GitHub Repository: https://github.com/DeadIndian/fastfetch-kde-splash
 
 === TÜRKÇE ===
-Fastfetch KDE Açılış Ekranı v1.4
+Deads Fastfetch Splash Screen (Forked) v1.8
 
-'fastfetch' aracını kullanarak sistem bilgilerini şık bir şekilde sunan sade ve modern KDE Plasma açılış ekranı.
+'fastfetch' aracını kullanarak gerçek sistem bilgilerinizi gösteren, tam renkli, karakter karakter çözülen glitch animasyonlu matris tarzı KDE Plasma açılış ekranı.
+
+herzane'nin fastfetch-kde-splash projesinin ANSI renk desteği ve daha fazlasını içeren fork'u.
 
 ÖZELLİKLER:
-- Renk Seçimi: İstediğiniz herhangi bir rengi (tema rengini) seçebilirsiniz.
-- Düzen Seçenekleri: Sadece logo veya tüm bilgileri kapsayan "full" mod.
-- Arka Plan Ayarı: Farklı renk seçenekleri veya şeffaflık desteği.
-- Şık Açılış: Karakterlerin güzelce belirdiği modern bir animasyon.
+- Gerçek ANSI Renkleri: Terminalinizdeki fastfetch renkleri (256 renk ve 24-bit truecolor) birebir korunur.
+- 4 Düzen Modu: Sadece logo, Logo + Sistem Bilgisi (full), Sadece Sistem Bilgisi (info), Sıralı (logo çözülür, sola kayar, bilgi belirir).
+- Glitch Belirme Animasyonu: Karakterler rastgele sırada çözülür.
+- Animasyon Hız Kontrolü: Hızlı / normal / yavaş ön ayarları veya tamamen özel zamanlama.
+- Tema Rengi ve Arka Plan: İsteğe bağlı parıltı rengi, herhangi bir arka plan rengi veya şeffaf.
+- Çok Dilli Kurulum: İngilizce ve Türkçe, otomatik algılanır.
+- Sağlam Hata Yönetimi: fastfetch eksikse net hata mesajı.
 
-ELLE (MANUEL) YAPILANDIRMA:
-Eğer bu temayı KDE Mağazası üzerinden kurduklarınızda "Configuration Required" uyarısı alırsınız. 
-Bunu şu şekilde düzeltebilirsiniz:
-1. Proje klasöründeki `install.sh` betiğini çalıştırarak.
-2. VEYA şu dosyayı (10-13. satırlar arası) elle düzenleyerek:
-   `~/.local/share/plasma/look-and-feel/fastfetch-splash/contents/splash/Splash.qml`
-   - `property bool isConfigured` değerini `true` yapın.
-   - `themeColor`, `displayMode` ve `bgColor` değerlerini isteğinize göre değiştirin.
+YAPILANDIRMA (KDE Mağazası Kullanıcıları):
+Açılış ekranı kutudan çıktığı gibi logo modunda çalışır. Tam özelleştirme (renk, düzen, arka plan, hız) için GitHub deposundaki etkileşimli kurulumu çalıştırın veya doğrudan düzenleyin:
+  ~/.local/share/plasma/look-and-feel/fork-fastfetch-splash/contents/splash/Splash.qml
+  - `property bool isConfigured` değerini `true` yapın.
+  - `themeColor`, `glowEnabled`, `displayMode`, `bgColor` ve animasyon hız özelliklerini ayarlayın.
 
-GitHub Deposu: https://github.com/herzane52/fastfetch-kde-splash
+GitHub Deposu: https://github.com/DeadIndian/fastfetch-kde-splash
