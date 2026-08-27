@@ -322,8 +322,8 @@ Rectangle {
                     }
             }
 
-            // Info (full mode)
-            if (root.displayMode === "full" && root.infoAnimStep < root.infoIndices.length) {
+            // Info (full and info modes)
+            if ((root.displayMode === "full" || root.displayMode === "info") && root.infoAnimStep < root.infoIndices.length) {
                 finished = false;
                 for (var j = 0; j < root.charsPerFrameInfo && root.infoAnimStep < root.infoIndices.length; j++) {
                     var jdx = root.infoIndices[root.infoAnimStep];
