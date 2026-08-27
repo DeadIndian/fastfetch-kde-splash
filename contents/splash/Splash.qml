@@ -7,8 +7,16 @@ Rectangle {
     // Bu değerler install.sh tarafından değiştirilebilir / These values can be changed by install.sh
     property bool isConfigured: true                            // Kurulum betiği çalıştırıldı mı kontrolü / Check if the installation script has been run
     property string themeColor: "#ff0000"                       // metin rengi / text color (fallback glow color only)
-    property string displayMode: "logo"                   // "logo" | "full" | "sequential"
+    property string displayMode: "logo"                   // "logo" | "full" | "sequential" | "info"
     property string bgColor: "#000000"                          // Arkaplan rengi veya şeffaf "transparent" / Background color or "transparent"
+
+    // Animasyon hızı ayarları / Animation speed settings
+    // Bu değerler install.sh tarafından değiştirilebilir / These values can be changed by install.sh
+    property int glitchInterval: 30      // Karakter belirme timer aralığı (ms) / Glitch reveal timer interval (ms)
+    property int introDuration: 800      // Giriş animasyonu süresi (ms) / Intro fade-in duration (ms)
+    property int exitDuration: 1500      // Çıkış animasyonu süresi (ms) / Exit fade-out duration (ms)
+    property int minSplashDuration: 4000 // Minimum görünürlük süresi (ms) / Minimum visible duration (ms)
+    property int frameDivisor: 50        // Kare başına karakter sayısı böleni / Chars-per-frame divisor (smaller = faster)
 
     property string logoData: ""
     property string infoData: ""
@@ -279,7 +287,7 @@ Rectangle {
 
     Timer {
         id: minDurationTimer
-        interval: 4000
+        interval: root.minSplashDuration
         running: false
         onTriggered: {
             minDurationMet = true;
@@ -290,7 +298,7 @@ Rectangle {
     // Rastgele metin belirme efekti Timer'ı / Random text reveal effect Timer
     Timer {
         id: glitchAnimTimer
-        interval: 30
+        interval: root.glitchInterval
         running: false
         repeat: true
         onTriggered: {
@@ -366,7 +374,7 @@ Rectangle {
         onTriggered: {
             var isReady = root.displayMode === "logo"
             ? root.logoLoaded
-            : (root.logoLoaded && root.infoLoaded);
+            : (root.displayMode === "info" ? root.infoLoaded : (root.logoLoaded && root.infoLoaded));
             if (!isReady) {
                 showError("'fastfetch' not found or could not be executed.\nPlease make sure the package is installed.");
             }
@@ -377,7 +385,7 @@ Rectangle {
         if (root.errorOccurred) return;
         root.errorOccurred = true;
         root.logoData = "";
-        root.infoData = "Error: " + msg + "\n\nVisit GitHub for installation & details:\nhttps://github.com/herzane52/fastfetch-kde-splash";
+        root.infoData = "Error: " + msg + "\n\nVisit GitHub for installation & details:\nhttps://github.com/DeadIndian/fastfetch-kde-splash";
         root.displayMode = "full";
         safetyTimer.stop();
         startEffects();
@@ -398,33 +406,35 @@ Rectangle {
     function startEffects() {
         // Logo Ayarları / Logo Settings
         // Parse logo ANSI → HTML + plain
-        var logoParsed = ansiToHtml(root.logoData);
-        root.logoHtmlChars = splitHtmlToChars(logoParsed.html, logoParsed.plain);
-        root.logoPlainChars = logoParsed.plain.split("");
-        root.logoRevealed = new Array(root.logoHtmlChars.length).fill(false);
+        if (root.displayMode !== "info") {
+            var logoParsed = ansiToHtml(root.logoData);
+            root.logoHtmlChars = splitHtmlToChars(logoParsed.html, logoParsed.plain);
+            root.logoPlainChars = logoParsed.plain.split("");
+            root.logoRevealed = new Array(root.logoHtmlChars.length).fill(false);
 
-        // Build indices (skip spaces / newlines)
-        root.logoIndices = [];
-        for (var i = 0; i < root.logoPlainChars.length; i++) {
-            var c = root.logoPlainChars[i];
-            if (c !== ' ' && c !== '\n' && c !== '\r') {
-                root.logoIndices.push(i);
-            } else {
-                root.logoRevealed[i] = true;
+            // Build indices (skip spaces / newlines)
+            root.logoIndices = [];
+            for (var i = 0; i < root.logoPlainChars.length; i++) {
+                var c = root.logoPlainChars[i];
+                if (c !== ' ' && c !== '\n' && c !== '\r') {
+                    root.logoIndices.push(i);
+                } else {
+                    root.logoRevealed[i] = true;
+                }
             }
+            shuffleArray(root.logoIndices);
+
+            // Initial hidden render (preserves layout size)
+            logoText.text = rebuildHtml(root.logoHtmlChars, root.logoRevealed);
+
+            root.charsPerFrameLogo = root.displayMode === "sequential"
+            ? Math.max(1, Math.ceil(root.logoIndices.length / (root.frameDivisor / 2)))
+            : Math.max(1, Math.ceil(root.logoIndices.length / root.frameDivisor));
         }
-        shuffleArray(root.logoIndices);
-
-        // Initial hidden render (preserves layout size)
-        logoText.text = rebuildHtml(root.logoHtmlChars, root.logoRevealed);
-
-        root.charsPerFrameLogo = root.displayMode === "sequential"
-        ? Math.max(1, Math.ceil(root.logoIndices.length / 25))
-        : Math.max(1, Math.ceil(root.logoIndices.length / 50));
 
         // Info Ayarları / Info Settings
         // Parse info ANSI → HTML + plain
-        if (root.displayMode === "full" || root.displayMode === "sequential") {
+        if (root.displayMode === "full" || root.displayMode === "sequential" || root.displayMode === "info") {
             var infoParsed = ansiToHtml(root.infoData);
             root.infoHtmlChars = splitHtmlToChars(infoParsed.html, infoParsed.plain);
             root.infoPlainChars = infoParsed.plain.split("");
@@ -442,7 +452,7 @@ Rectangle {
             shuffleArray(root.infoIndices);
 
             infoText.text = rebuildHtml(root.infoHtmlChars, root.infoRevealed);
-            root.charsPerFrameInfo = Math.max(1, Math.ceil(root.infoIndices.length / 50));
+            root.charsPerFrameInfo = Math.max(1, Math.ceil(root.infoIndices.length / root.frameDivisor));
         }
 
         // Sequential: logo starts centered
@@ -495,7 +505,7 @@ Rectangle {
 
             var isReady = (root.displayMode === "logo")
             ? root.logoLoaded
-            : (root.logoLoaded && root.infoLoaded);
+            : (root.displayMode === "info" ? root.infoLoaded : (root.logoLoaded && root.infoLoaded));
 
             if (isReady && !root.errorOccurred) {
                 safetyTimer.stop();
@@ -517,13 +527,14 @@ Rectangle {
         // LOGO — position managed by startEffects / logoSlideAnimation
         Item {
             id: logoContainer
-            // Default position for "full" and "logo" modes: left side of centered row
+            // Default position: left side of centered row ("info" mode hides logo)
             x: root.displayMode === "full"
             ? (root.width - (logoText.implicitWidth + 50 + infoText.implicitWidth)) / 2
             : (root.width - logoText.implicitWidth) / 2
             y: (root.height - logoText.implicitHeight) / 2
             width: logoText.implicitWidth
             height: logoText.implicitHeight
+            visible: root.displayMode !== "info"
 
             Text {
                 id: logoText
@@ -564,9 +575,11 @@ Rectangle {
         // BİLGİ BÖLÜMÜ / INFO SECTION
         Item {
             id: infoContainer
-            visible: root.displayMode === "full" || root.displayMode === "sequential"
+            visible: root.displayMode === "full" || root.displayMode === "sequential" || root.displayMode === "info"
             opacity: root.displayMode === "sequential" ? 0 : 1
-            x: logoContainer.x + logoContainer.width + 50
+            x: root.displayMode === "info"
+            ? (root.width - infoText.implicitWidth) / 2
+            : (logoContainer.x + logoContainer.width + 50)
             y: (root.height - infoText.implicitHeight) / 2
             width: infoText.implicitWidth
             height: infoText.implicitHeight
@@ -628,7 +641,7 @@ Rectangle {
         id: introAnimation
         target: content
         from: 0; to: 1
-        duration: 800
+        duration: root.introDuration
         easing.type: Easing.InOutQuad
     }
 
@@ -636,7 +649,7 @@ Rectangle {
         id: exitAnimation
         target: root
         from: 1; to: 0
-        duration: 1500
+        duration: root.exitDuration
         easing.type: Easing.InOutQuad
     }
 
@@ -645,8 +658,10 @@ Rectangle {
             showError("Configuration required! Please run 'install.sh' to finalize.");
             return;
         }
-        executable.exec("fastfetch --structure L --pipe false");
-        if (root.displayMode === "full" || root.displayMode === "sequential") {
+        if (root.displayMode !== "info") {
+            executable.exec("fastfetch --structure L --pipe false");
+        }
+        if (root.displayMode !== "logo") {
             executable.exec("fastfetch --logo none --pipe false");
         }
     }
