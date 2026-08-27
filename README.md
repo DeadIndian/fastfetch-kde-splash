@@ -20,13 +20,9 @@ A fork of [herzane52/fastfetch-kde-splash](https://github.com/herzane52/fastfetc
 [Configuration](#-configuration) ·
 [Report Bug](https://github.com/DeadIndian/fastfetch-kde-splash/issues)
 
-<!-- USER: Hero GIF — record the splash in action and save it as
-     assets/screenshots/hero.gif (existing recordings live at repo root:
-     video1.gif, video2.gif) -->
 <p>
   <img src="assets/screenshots/hero.gif" alt="Fastfetch KDE Splash in action" width="80%" />
 </p>
-<sub><i>Placeholder — replace <code>assets/screenshots/hero.gif</code> with your recording</i></sub>
 
 </div>
 
@@ -66,18 +62,17 @@ This fork builds on herzane's original with two headline additions: a **full ANS
 
 ## 📸 Demo
 
-<!-- USER: One GIF per layout mode. Record each mode by setting it in install.sh,
-     logging out, and recording the splash. Save to assets/screenshots/. -->
-
-| Logo only | Full (logo + info) |
-| :---: | :---: |
+|                          Logo only                          |                     Full (logo + info)                      |
+| :---------------------------------------------------------: | :---------------------------------------------------------: |
 | <img src="assets/screenshots/mode-logo.gif" width="100%" /> | <img src="assets/screenshots/mode-full.gif" width="100%" /> |
-| <sub><i>placeholder: mode-logo.gif</i></sub> | <sub><i>placeholder: mode-full.gif</i></sub> |
 
-| Sequential | Info only |
-| :---: | :---: |
+---
+
+|                            Sequential                             |                          Info only                          |
+| :---------------------------------------------------------------: | :---------------------------------------------------------: |
 | <img src="assets/screenshots/mode-sequential.gif" width="100%" /> | <img src="assets/screenshots/mode-info.gif" width="100%" /> |
-| <sub><i>placeholder: mode-sequential.gif</i></sub> | <sub><i>placeholder: mode-info.gif</i></sub> |
+
+---
 
 ## 📋 Requirements
 
@@ -102,7 +97,7 @@ chmod +x install.sh
 
 The installer walks you through four questions — theme color, layout, background, and animation speed — then installs to `~/.local/share/plasma/look-and-feel/fork-fastfetch-splash/`.
 
-**Activate it:** *System Settings → Appearance → Splash Screen → **fork-fastfetch-splash*** → Apply. Log out and back in to see it.
+**Activate it:** \*System Settings → Appearance → Splash Screen → **fork-fastfetch-splash\*** → Apply. Log out and back in to see it.
 
 ## 💻 Usage
 
@@ -112,23 +107,23 @@ There's nothing to run day-to-day — the splash activates at login. To preview 
 
 All configuration happens through the installer (`./install.sh`). The four questions:
 
-| Setting | Options |
-| --- | --- |
+| Setting     | Options                                                                                                                                                          |
+| ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Theme color | none (**default** — pure fastfetch colors, no glow) · red / blue / green / cyan, or any HEX (e.g. `#637C76`) — glow only; text colors always come from fastfetch |
-| Layout | `logo` (OS logo only) · `full` (logo + info) · `info` (system info only) · `sequential` (logo reveals, slides left, info fades in) |
-| Background | black / transparent, or any HEX |
-| Speed | normal / fast / slow, or custom values for glitch interval, intro & exit durations, minimum splash duration, frame divisor |
+| Layout      | `logo` (OS logo only) · `full` (logo + info) · `info` (system info only) · `sequential` (logo reveals, slides left, info fades in)                               |
+| Background  | black / transparent, or any HEX                                                                                                                                  |
+| Speed       | normal / fast / slow, or custom values for glitch interval, intro & exit durations, minimum splash duration, frame divisor                                       |
 
 The installer writes your choices directly into the installed `Splash.qml` (see below).
 
 <details>
 <summary>Speed preset values</summary>
 
-| Preset | Glitch interval | Intro | Exit | Min duration | Frame divisor |
-| --- | --- | --- | --- | --- | --- |
-| Fast | 15 ms | 400 ms | 800 ms | 2500 ms | 25 |
-| Normal | 30 ms | 800 ms | 1500 ms | 4000 ms | 50 |
-| Slow | 50 ms | 1500 ms | 3000 ms | 6000 ms | 100 |
+| Preset | Glitch interval | Intro   | Exit    | Min duration | Frame divisor |
+| ------ | --------------- | ------- | ------- | ------------ | ------------- |
+| Fast   | 15 ms           | 400 ms  | 800 ms  | 2500 ms      | 25            |
+| Normal | 30 ms           | 800 ms  | 1500 ms | 4000 ms      | 50            |
+| Slow   | 50 ms           | 1500 ms | 3000 ms | 6000 ms      | 100           |
 
 </details>
 
@@ -148,17 +143,17 @@ nano ~/.local/share/plasma/look-and-feel/fork-fastfetch-splash/contents/splash/S
 
 The properties at the top of `Splash.qml` are the full set of knobs:
 
-| Property | Description | Default |
-| --- | --- | --- |
-| `themeColor` | Glow color (HEX) | `#ff0000` |
-| `glowEnabled` | Glow on/off — `false` = pure fastfetch colors | `false` |
-| `displayMode` | `logo` / `full` / `sequential` / `info` | `logo` |
-| `bgColor` | Background (HEX or `transparent`) | `#000000` |
-| `glitchInterval` | Reveal timer interval, smaller = faster (ms) | `30` |
-| `introDuration` | Fade-in duration (ms) | `800` |
-| `exitDuration` | Fade-out duration (ms) | `1500` |
-| `minSplashDuration` | Minimum visible time (ms) | `4000` |
-| `frameDivisor` | Chars revealed per frame divisor, smaller = faster | `50` |
+| Property            | Description                                        | Default   |
+| ------------------- | -------------------------------------------------- | --------- |
+| `themeColor`        | Glow color (HEX)                                   | `#ff0000` |
+| `glowEnabled`       | Glow on/off — `false` = pure fastfetch colors      | `false`   |
+| `displayMode`       | `logo` / `full` / `sequential` / `info`            | `logo`    |
+| `bgColor`           | Background (HEX or `transparent`)                  | `#000000` |
+| `glitchInterval`    | Reveal timer interval, smaller = faster (ms)       | `30`      |
+| `introDuration`     | Fade-in duration (ms)                              | `800`     |
+| `exitDuration`      | Fade-out duration (ms)                             | `1500`    |
+| `minSplashDuration` | Minimum visible time (ms)                          | `4000`    |
+| `frameDivisor`      | Chars revealed per frame divisor, smaller = faster | `50`      |
 
 ### Adding installer languages
 

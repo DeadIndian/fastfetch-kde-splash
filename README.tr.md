@@ -13,12 +13,9 @@
 
 [English](README.md) | [Türkçe](README.tr.md)
 
-<!-- USER: Hero GIF — kaydedin ve assets/screenshots/hero.gif olarak ekleyin
-     (eski kayıtlar repo kökünde: video1.gif, video2.gif) -->
 <p>
   <img src="assets/screenshots/hero.gif" alt="Fastfetch KDE Splash ekran kaydı" width="80%" />
 </p>
-<sub><i>Placeholder — <code>assets/screenshots/hero.gif</code> yoluna kendi kaydınızı koyun</i></sub>
 
 </div>
 
@@ -58,18 +55,17 @@ Bu fork, orijinalin üzerine iki büyük özellik ekler: **tam ANSI renk desteğ
 
 ## 📸 Demo
 
-<!-- USER: Her düzen modu için bir GIF. install.sh ile modu seçip çıkış yapıp
-     kaydedin, assets/screenshots/ altına koyun. -->
-
-| Sadece logo | Full (logo + bilgi) |
-| :---: | :---: |
+|                         Sadece logo                         |                     Full (logo + bilgi)                     |
+| :---------------------------------------------------------: | :---------------------------------------------------------: |
 | <img src="assets/screenshots/mode-logo.gif" width="100%" /> | <img src="assets/screenshots/mode-full.gif" width="100%" /> |
-| <sub><i>placeholder: mode-logo.gif</i></sub> | <sub><i>placeholder: mode-full.gif</i></sub> |
 
-| Sıralı | Sadece bilgi |
-| :---: | :---: |
+---
+
+|                              Sıralı                               |                        Sadece bilgi                         |
+| :---------------------------------------------------------------: | :---------------------------------------------------------: |
 | <img src="assets/screenshots/mode-sequential.gif" width="100%" /> | <img src="assets/screenshots/mode-info.gif" width="100%" /> |
-| <sub><i>placeholder: mode-sequential.gif</i></sub> | <sub><i>placeholder: mode-info.gif</i></sub> |
+
+---
 
 ## 📋 Gereksinimler
 
@@ -94,7 +90,7 @@ chmod +x install.sh
 
 Kurulum sihirbazı dört soru sorar — tema rengi, düzen, arka plan ve animasyon hızı — ve `~/.local/share/plasma/look-and-feel/fork-fastfetch-splash/` altına kurar.
 
-**Etkinleştirme:** *Sistem Ayarları → Görünüm → Açılış Ekranı → **fork-fastfetch-splash*** → Uygula. Görmek için çıkış yapıp tekrar girin.
+**Etkinleştirme:** \*Sistem Ayarları → Görünüm → Açılış Ekranı → **fork-fastfetch-splash\*** → Uygula. Görmek için çıkış yapıp tekrar girin.
 
 ## 💻 Kullanım
 
@@ -104,23 +100,23 @@ Günlük çalıştırılacak bir şey yok — açılış ekranı oturum açılı
 
 Tüm yapılandırma kurulum sihirbazı üzerinden yapılır (`./install.sh`). Dört soru:
 
-| Ayar | Seçenekler |
-| --- | --- |
+| Ayar       | Seçenekler                                                                                                                                                                                           |
+| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Tema rengi | yok (**varsayılan** — saf fastfetch renkleri, parıltı kapalı) · kırmızı / mavi / yeşil / camgöbeği veya herhangi HEX (örn. `#637C76`) — sadece parıltı; metin renkleri her zaman fastfetch'ten gelir |
-| Düzen | `logo` (sadece logo) · `full` (logo + bilgi) · `info` (sadece bilgi) · `sequential` (logo çözülür, sola kayar, bilgi belirir) |
-| Arka plan | siyah / şeffaf veya herhangi HEX |
-| Hız | normal / hızlı / yavaş veya glitch aralığı, giriş/çıkış süreleri, minimum süre, kare böleni için özel değerler |
+| Düzen      | `logo` (sadece logo) · `full` (logo + bilgi) · `info` (sadece bilgi) · `sequential` (logo çözülür, sola kayar, bilgi belirir)                                                                        |
+| Arka plan  | siyah / şeffaf veya herhangi HEX                                                                                                                                                                     |
+| Hız        | normal / hızlı / yavaş veya glitch aralığı, giriş/çıkış süreleri, minimum süre, kare böleni için özel değerler                                                                                       |
 
 Kurulum sihirbazı seçimlerinizi doğrudan kurulu `Splash.qml` içine yazar (aşağıya bakın).
 
 <details>
 <summary>Hız ön ayarı değerleri</summary>
 
-| Ön ayar | Glitch aralığı | Giriş | Çıkış | Min. süre | Kare böleni |
-| --- | --- | --- | --- | --- | --- |
-| Hızlı | 15 ms | 400 ms | 800 ms | 2500 ms | 25 |
-| Normal | 30 ms | 800 ms | 1500 ms | 4000 ms | 50 |
-| Yavaş | 50 ms | 1500 ms | 3000 ms | 6000 ms | 100 |
+| Ön ayar | Glitch aralığı | Giriş   | Çıkış   | Min. süre | Kare böleni |
+| ------- | -------------- | ------- | ------- | --------- | ----------- |
+| Hızlı   | 15 ms          | 400 ms  | 800 ms  | 2500 ms   | 25          |
+| Normal  | 30 ms          | 800 ms  | 1500 ms | 4000 ms   | 50          |
+| Yavaş   | 50 ms          | 1500 ms | 3000 ms | 6000 ms   | 100         |
 
 </details>
 
@@ -140,17 +136,17 @@ nano ~/.local/share/plasma/look-and-feel/fork-fastfetch-splash/contents/splash/S
 
 `Splash.qml` dosyasının başındaki özellikler tüm ayarları içerir:
 
-| Özellik | Açıklama | Varsayılan |
-| --- | --- | --- |
-| `themeColor` | Parıltı rengi (HEX) | `#ff0000` |
-| `glowEnabled` | Parıltı açık/kapalı — `false` = saf fastfetch renkleri | `false` |
-| `displayMode` | `logo` / `full` / `sequential` / `info` | `logo` |
-| `bgColor` | Arka plan (HEX veya `transparent`) | `#000000` |
-| `glitchInterval` | Belirme zamanlayıcı aralığı, küçük = hızlı (ms) | `30` |
-| `introDuration` | Giriş animasyonu süresi (ms) | `800` |
-| `exitDuration` | Çıkış animasyonu süresi (ms) | `1500` |
-| `minSplashDuration` | Minimum görünme süresi (ms) | `4000` |
-| `frameDivisor` | Kare başına karakter böleni, küçük = hızlı | `50` |
+| Özellik             | Açıklama                                               | Varsayılan |
+| ------------------- | ------------------------------------------------------ | ---------- |
+| `themeColor`        | Parıltı rengi (HEX)                                    | `#ff0000`  |
+| `glowEnabled`       | Parıltı açık/kapalı — `false` = saf fastfetch renkleri | `false`    |
+| `displayMode`       | `logo` / `full` / `sequential` / `info`                | `logo`     |
+| `bgColor`           | Arka plan (HEX veya `transparent`)                     | `#000000`  |
+| `glitchInterval`    | Belirme zamanlayıcı aralığı, küçük = hızlı (ms)        | `30`       |
+| `introDuration`     | Giriş animasyonu süresi (ms)                           | `800`      |
+| `exitDuration`      | Çıkış animasyonu süresi (ms)                           | `1500`     |
+| `minSplashDuration` | Minimum görünme süresi (ms)                            | `4000`     |
+| `frameDivisor`      | Kare başına karakter böleni, küçük = hızlı             | `50`       |
 
 ### Kurulum sihirbazına dil ekleme
 
