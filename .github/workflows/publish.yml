@@ -1,0 +1,48 @@
+name: Publish to KDE Store
+
+# Publishes a new package version to store.kde.org whenever a tag (v*) is pushed.
+# Requires repo secrets (Settings → Secrets and variables → Actions):
+#   OCS_API_KEY   – API key from store.kde.org → your profile → Settings → API keys
+#   OCS_PRODUCT_ID – numeric product id from your store page URL (store.kde.org/p/<ID>)
+on:
+  push:
+    tags: ['v*']
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract version from tag
+        id: ver
+        run: echo "version=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Build KPackage tarball
+        run: |
+          mkdir -p dist
+          tar -cJf "dist/fork-fastfetch-splash-v${{ steps.ver.outputs.version }}.tar.xz" \
+            metadata.json contents
+
+      - name: Upload to store.kde.org
+        env:
+          OCS_API_KEY: ${{ secrets.OCS_API_KEY }}
+          OCS_PRODUCT_ID: ${{ secrets.OCS_PRODUCT_ID }}
+          VERSION: ${{ steps.ver.outputs.version }}
+        run: |
+          set -euo pipefail
+          curl --fail-with-body -sS -X PUT \
+            -u "$OCS_API_KEY:" \
+            -H "OCS-APIREQUEST: true" \
+            -H "Accept: application/json" \
+            -F "localfile=@dist/fork-fastfetch-splash-v${VERSION}.tar.xz" \
+            -F "version=${VERSION}" \
+            -F "changelog=See https://github.com/DeadIndian/fastfetch-kde-splash/releases/tag/v${VERSION}" \
+            "https://share.kde.org/ocs/v1/content/edit/${OCS_PRODUCT_ID}"
+
+      - name: Upload tarball to GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload "${GITHUB_REF_NAME}" \
+            "dist/fork-fastfetch-splash-v${{ steps.ver.outputs.version }}.tar.xz" --clobber
