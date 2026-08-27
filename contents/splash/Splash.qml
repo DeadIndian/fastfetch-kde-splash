@@ -6,7 +6,8 @@ Rectangle {
     color: bgColor
     // Bu değerler install.sh tarafından değiştirilebilir / These values can be changed by install.sh
     property bool isConfigured: true                            // Kurulum betiği çalıştırıldı mı kontrolü / Check if the installation script has been run
-    property string themeColor: "#ff0000"                       // metin rengi / text color (fallback glow color only)
+    property string themeColor: "#ff0000"                       // Parıltı rengi / Glow color (unused when glowEnabled=false)
+    property bool glowEnabled: false                            // Parıltı açık mı / Is glow enabled (false = pure fastfetch colors)
     property string displayMode: "logo"                   // "logo" | "full" | "sequential" | "info"
     property string bgColor: "#000000"                          // Arkaplan rengi veya şeffaf "transparent" / Background color or "transparent"
 
@@ -555,7 +556,7 @@ Rectangle {
                 anchors.fill: logoText
                 source: logoText
                 transparentBorder: true
-                visible: root.displayMode === "logo"
+                visible: root.displayMode === "logo" && root.glowEnabled
                 color: root.themeColor
                 radius: 8   // İç parlama (Keskin) / Inner glow (Sharp)
                 samples: 16
@@ -564,7 +565,7 @@ Rectangle {
                 anchors.fill: logoText
                 source: logoText
                 transparentBorder: true
-                visible: root.displayMode === "logo"
+                visible: root.displayMode === "logo" && root.glowEnabled
                 color: root.themeColor
                 radius: 25  // Dış parlama (Aura) / Outer glow (Aura)
                 samples: 30
@@ -608,7 +609,7 @@ Rectangle {
                 anchors.fill: infoText
                 source: infoText
                 transparentBorder: true
-                visible: root.displayMode === "logo"
+                visible: root.displayMode === "logo" && root.glowEnabled
                 color: root.themeColor
                 radius: 6   // İç parlama / Inner glow
                 samples: 12
@@ -617,7 +618,7 @@ Rectangle {
                 anchors.fill: infoText
                 source: infoText
                 transparentBorder: true
-                visible: root.displayMode === "logo"
+                visible: root.displayMode === "logo" && root.glowEnabled
                 color: root.themeColor
                 radius: 20  // Dış parlama / Outer glow
                 samples: 24

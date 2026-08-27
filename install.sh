@@ -27,16 +27,25 @@ echo ""
 # Question 1: Color
 echo -e "$MSG_C_TEXT"
 read -p "$MSG_C_INPUT" INPUT_COLOR
-INPUT_COLOR=${INPUT_COLOR:-1} # Default to 1 if empty
+INPUT_COLOR=${INPUT_COLOR:-5} # Default to 5 (none) if empty
 case "$INPUT_COLOR" in
     1|red) COLOR="#ff0000" ;;
     2|blue) COLOR="#0080ff" ;;
     3|green) COLOR="#00ff00" ;;
     4|cyan) COLOR="#00ffff" ;;
+    5|none) COLOR="none" ;;
     yellow) COLOR="#ffff00" ;;
     purple) COLOR="#8000ff" ;;
     *) COLOR="$INPUT_COLOR" ;; # Hex code or custom
 esac
+
+# "none" disables glow entirely; text keeps fastfetch's own colors
+if [ "$COLOR" = "none" ]; then
+    GLOW_ENABLED="false"
+    COLOR_NAME="none"
+else
+    GLOW_ENABLED="true"
+fi
 
 echo ""
 
@@ -113,6 +122,7 @@ cp metadata.json "$TARGET_DIR/"
 TARGET_QML="$TARGET_DIR/contents/splash/Splash.qml"
 sed -i "s/property bool isConfigured: .*/property bool isConfigured: true/g" "$TARGET_QML"
 sed -i "s/property string themeColor: \".*\"/property string themeColor: \"$COLOR\"/g" "$TARGET_QML"
+sed -i "s/property bool glowEnabled: .*/property bool glowEnabled: $GLOW_ENABLED/g" "$TARGET_QML"
 sed -i "s/property string displayMode: \".*\"/property string displayMode: \"$LAYOUT\"/g" "$TARGET_QML"
 sed -i "s/property string bgColor: \".*\"/property string bgColor: \"$BGCOLOR\"/g" "$TARGET_QML"
 sed -i "s/property int glitchInterval: .*/property int glitchInterval: $GLITCH/g" "$TARGET_QML"

@@ -114,7 +114,7 @@ All configuration happens through the installer (`./install.sh`). The four quest
 
 | Setting | Options |
 | --- | --- |
-| Theme color | red / blue / green / cyan, or any HEX (e.g. `#637C76`) — used for the glow; text colors come from fastfetch itself |
+| Theme color | none (**default** — pure fastfetch colors, no glow) · red / blue / green / cyan, or any HEX (e.g. `#637C76`) — glow only; text colors always come from fastfetch |
 | Layout | `logo` (OS logo only) · `full` (logo + info) · `info` (system info only) · `sequential` (logo reveals, slides left, info fades in) |
 | Background | black / transparent, or any HEX |
 | Speed | normal / fast / slow, or custom values for glitch interval, intro & exit durations, minimum splash duration, frame divisor |
@@ -151,6 +151,7 @@ The properties at the top of `Splash.qml` are the full set of knobs:
 | Property | Description | Default |
 | --- | --- | --- |
 | `themeColor` | Glow color (HEX) | `#ff0000` |
+| `glowEnabled` | Glow on/off — `false` = pure fastfetch colors | `false` |
 | `displayMode` | `logo` / `full` / `sequential` / `info` | `logo` |
 | `bgColor` | Background (HEX or `transparent`) | `#000000` |
 | `glitchInterval` | Reveal timer interval, smaller = faster (ms) | `30` |

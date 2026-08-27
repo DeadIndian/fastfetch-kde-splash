@@ -106,7 +106,7 @@ Tüm yapılandırma kurulum sihirbazı üzerinden yapılır (`./install.sh`). D�
 
 | Ayar | Seçenekler |
 | --- | --- |
-| Tema rengi | kırmızı / mavi / yeşil / camgöbeği veya herhangi HEX (örn. `#637C76`) — parıltı için; metin renkleri fastfetch'ten gelir |
+| Tema rengi | yok (**varsayılan** — saf fastfetch renkleri, parıltı kapalı) · kırmızı / mavi / yeşil / camgöbeği veya herhangi HEX (örn. `#637C76`) — sadece parıltı; metin renkleri her zaman fastfetch'ten gelir |
 | Düzen | `logo` (sadece logo) · `full` (logo + bilgi) · `info` (sadece bilgi) · `sequential` (logo çözülür, sola kayar, bilgi belirir) |
 | Arka plan | siyah / şeffaf veya herhangi HEX |
 | Hız | normal / hızlı / yavaş veya glitch aralığı, giriş/çıkış süreleri, minimum süre, kare böleni için özel değerler |
@@ -143,6 +143,7 @@ nano ~/.local/share/plasma/look-and-feel/fork-fastfetch-splash/contents/splash/S
 | Özellik | Açıklama | Varsayılan |
 | --- | --- | --- |
 | `themeColor` | Parıltı rengi (HEX) | `#ff0000` |
+| `glowEnabled` | Parıltı açık/kapalı — `false` = saf fastfetch renkleri | `false` |
 | `displayMode` | `logo` / `full` / `sequential` / `info` | `logo` |
 | `bgColor` | Arka plan (HEX veya `transparent`) | `#000000` |
 | `glitchInterval` | Belirme zamanlayıcı aralığı, küçük = hızlı (ms) | `30` |
