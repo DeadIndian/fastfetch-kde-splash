@@ -1,93 +1,202 @@
-# Fork Fastfetch KDE Splash v1.5
-
-<p align="center">
-  <img src="contents/previews/splash.png" alt="Fork Fastfetch Splash Preview" width="100%">
-</p>
-
 <div align="center">
-  <table>
-    <tr>
-      <td width="50%">
-        <img src="video1.gif" width="100%">
-      </td>
-      <td width="50%">
-        <img src="video2.gif" width="100%">
-      </td>
-    </tr>
-  </table>
+
+<!-- USER: Optional logo — drop one at assets/logo.png and uncomment -->
+<!-- <img src="assets/logo.png" alt="Fastfetch KDE Splash logo" width="120" /> -->
+
+# Fastfetch KDE Splash (Fork)
+
+### Matrix-style boot splash for KDE Plasma that shows your real system info — in full color
+
+A fork of [herzane52/fastfetch-kde-splash](https://github.com/herzane52/fastfetch-kde-splash) that renders `fastfetch` output on your Plasma splash screen with a glitch character-reveal animation — and, unlike the original, **preserves your terminal's ANSI colors** (256-color and truecolor) exactly as fastfetch prints them.
+
+[![License](https://img.shields.io/github/license/DeadIndian/fastfetch-kde-splash?style=flat-square)](LICENSE)
+[![Release](https://img.shields.io/github/v/release/DeadIndian/fastfetch-kde-splash?style=flat-square)](https://github.com/DeadIndian/fastfetch-kde-splash/releases)
+[![Stars](https://img.shields.io/github/stars/DeadIndian/fastfetch-kde-splash?style=flat-square)](https://github.com/DeadIndian/fastfetch-kde-splash/stargazers)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/DeadIndian/fastfetch-kde-splash/pulls)
+[![Made with QML](https://img.shields.io/badge/made%20with-QML-blue?style=flat-square)](contents/splash/Splash.qml)
+
+[Getting Started](#-installation) ·
+[Features](#-features) ·
+[Configuration](#-configuration) ·
+[Report Bug](https://github.com/DeadIndian/fastfetch-kde-splash/issues)
+
+<!-- USER: Hero GIF — record the splash in action and save it as
+     assets/screenshots/hero.gif (existing recordings live at repo root:
+     video1.gif, video2.gif) -->
+<p>
+  <img src="assets/screenshots/hero.gif" alt="Fastfetch KDE Splash in action" width="80%" />
+</p>
+<sub><i>Placeholder — replace <code>assets/screenshots/hero.gif</code> with your recording</i></sub>
+
 </div>
-This fork of Fastfetch KDE Splash is a "hacker/matrix style" splash animation for KDE Plasma that displays real-time system information using the `fastfetch` tool. It's a fork of the original by [herzane](https://www.herzane.tr) with community contributions.
 
-[English](README.md) | [Türkçe](README.tr.md)
+---
 
-## 🌟 Features
+## 📖 Table of Contents
 
-*   **Enhanced Color Selection:** Freely choose any theme color you want.
-*   **Flexible Layout Options:** Choose between logo-only, "full", or "sequential" modes.
-*   **Background Customization:** Set the background color or make it transparent.
-*   **Stylish Animation:** Be greeted by a modern effect where characters appear one by one during system startup.
+- [About](#-about)
+- [Features](#-features)
+- [Demo](#-demo)
+- [Requirements](#-requirements)
+- [Installation](#-installation)
+- [Configuration](#-configuration)
+- [Changing Settings Later](#-changing-settings-later)
+- [Uninstallation](#-uninstallation)
+- [Contributing](#-contributing)
+- [License](#-license)
+- [Acknowledgments](#-acknowledgments)
 
-## 🛠️ Installation and Configuration
+---
 
-### 1. Using the Installation Script (Recommended)
+## 🎯 About
 
-The `install.sh` script automates everything:
-*   Asks for your preferences (color, layout, background).
-*   Copies files to the correct directory (`~/.local/share/plasma/look-and-feel/fork-fastfetch-splash`).
-*   Automatically completes the configuration.
+Instead of a static spinner, your boot splash shows live `fastfetch` output — OS logo and system info — decoded character by character in random "glitch" order, like a terminal hacking scene. The splash ends automatically as soon as your desktop is ready.
+
+This fork builds on herzane's original with two headline additions: a **full ANSI color pipeline** (the splash matches your terminal's fastfetch colors, including 24-bit truecolor) and a **sequential layout mode** where the logo decodes center-screen, slides left, and the info fades in. It also carries everything the original gained in v1.5: animation speed presets, an info-only layout, and a translated installer.
+
+## ✨ Features
+
+- **True ANSI colors** — standard 16, 256-color, and 24-bit truecolor SGR sequences parsed and rendered as-is; no stripped single-color output
+- **4 layout modes** — logo only, logo + info (full), sequential (logo reveals then slides left while info fades in), info only
+- **Glitch reveal animation** — characters decode in random order (Fisher–Yates shuffle), layout preserved while hidden
+- **Animation speed control** — fast / normal / slow presets, or fully custom timing (glitch interval, intro/exit durations, minimum splash time, chars-per-frame)
+- **Theme color & background** — glow color and background (any HEX or transparent) set during install
+- **Interactive installer wizard** — plain `bash`, no dependencies; auto-detects your language (`lang/` files, easy to translate)
+- **Robust error handling** — safety timer catches missing/failed fastfetch and shows a readable error on the splash instead of hanging
+
+## 📸 Demo
+
+<!-- USER: One GIF per layout mode. Record each mode by setting it in install.sh,
+     logging out, and recording the splash. Save to assets/screenshots/. -->
+
+| Logo only | Full (logo + info) |
+| :---: | :---: |
+| <img src="assets/screenshots/mode-logo.gif" width="100%" /> | <img src="assets/screenshots/mode-full.gif" width="100%" /> |
+| <sub><i>placeholder: mode-logo.gif</i></sub> | <sub><i>placeholder: mode-full.gif</i></sub> |
+
+| Sequential | Info only |
+| :---: | :---: |
+| <img src="assets/screenshots/mode-sequential.gif" width="100%" /> | <img src="assets/screenshots/mode-info.gif" width="100%" /> |
+| <sub><i>placeholder: mode-sequential.gif</i></sub> | <sub><i>placeholder: mode-info.gif</i></sub> |
+
+## 📋 Requirements
+
+- **KDE Plasma 6** (uses `Qt5Compat.GraphicalEffects` / `plasma5support`)
+- **[fastfetch](https://github.com/fastfetch-cli/fastfetch)** installed and in `PATH`
+- `bash` (for the installer)
+
+## 🚀 Installation
 
 ```bash
-# to clone this fork repository
+# 1. Make sure fastfetch is installed
+#    Fedora: sudo dnf install fastfetch
+#    Arch:   sudo pacman -S fastfetch
+#    Debian/Ubuntu: sudo apt install fastfetch
+
+# 2. Clone and run the installer
 git clone https://github.com/DeadIndian/fastfetch-kde-splash.git
 cd fastfetch-kde-splash
-```
-
-```bash
-# to give permission to run the installation script
 chmod +x install.sh
-```
-```bash
-# to run the installation script
 ./install.sh
 ```
 
-### 2. Manual Configuration (Store Users)
+The installer walks you through four questions — theme color, layout, background, and animation speed — then installs to `~/.local/share/plasma/look-and-feel/fork-fastfetch-splash/`.
 
-If you installed the theme via KDE Store, you will encounter the "Configuration Required" error. To fix this, you can manually edit the following file (see lines 10-13):
+**Activate it:** *System Settings → Appearance → Splash Screen → **fork-fastfetch-splash*** → Apply. Log out and back in to see it.
+
+## 💻 Usage
+
+There's nothing to run day-to-day — the splash activates at login. To preview changes, just log out and back in.
+
+## ⚙️ Configuration
+
+All configuration happens through the installer (`./install.sh`). The four questions:
+
+| Setting | Options |
+| --- | --- |
+| Theme color | red / blue / green / cyan, or any HEX (e.g. `#637C76`) — used for the glow; text colors come from fastfetch itself |
+| Layout | `logo` (OS logo only) · `full` (logo + info) · `info` (system info only) · `sequential` (logo reveals, slides left, info fades in) |
+| Background | black / transparent, or any HEX |
+| Speed | normal / fast / slow, or custom values for glitch interval, intro & exit durations, minimum splash duration, frame divisor |
+
+The installer writes your choices directly into the installed `Splash.qml` (see below).
+
+<details>
+<summary>Speed preset values</summary>
+
+| Preset | Glitch interval | Intro | Exit | Min duration | Frame divisor |
+| --- | --- | --- | --- | --- | --- |
+| Fast | 15 ms | 400 ms | 800 ms | 2500 ms | 25 |
+| Normal | 30 ms | 800 ms | 1500 ms | 4000 ms | 50 |
+| Slow | 50 ms | 1500 ms | 3000 ms | 6000 ms | 100 |
+
+</details>
+
+## 🔧 Changing Settings Later
+
+Re-run the installer any time:
+
+```bash
+./install.sh
+```
+
+Or edit the installed QML directly:
 
 ```bash
 nano ~/.local/share/plasma/look-and-feel/fork-fastfetch-splash/contents/splash/Splash.qml
 ```
 
-*   Open the `Splash.qml` file.
-*   Set `property bool isConfigured` to `true`.
-*   Customize `themeColor`, `displayMode`, and `bgColor` values according to your preference.
+The properties at the top of `Splash.qml` are the full set of knobs:
 
-## 📋 Requirements
+| Property | Description | Default |
+| --- | --- | --- |
+| `themeColor` | Glow color (HEX) | `#ff0000` |
+| `displayMode` | `logo` / `full` / `sequential` / `info` | `logo` |
+| `bgColor` | Background (HEX or `transparent`) | `#000000` |
+| `glitchInterval` | Reveal timer interval, smaller = faster (ms) | `30` |
+| `introDuration` | Fade-in duration (ms) | `800` |
+| `exitDuration` | Fade-out duration (ms) | `1500` |
+| `minSplashDuration` | Minimum visible time (ms) | `4000` |
+| `frameDivisor` | Chars revealed per frame divisor, smaller = faster | `50` |
 
-*   **KDE Plasma:** Version 5 or 6.
-*   **Fastfetch:** Must be installed on your system.
-*   **Qt5Compat.GraphicalEffects:** Required for visual effects.
+### Adding installer languages
 
-## 🚀 Usage
+The installer auto-detects your `$LANG` and loads a matching file from `lang/`. To add one:
 
-1.  Open **System Settings**.
-2.  Go to the **Appearance > Splash Screen** tab.
-3.  Select **fork-fastfetch-splash** from the list and click **Apply**.
+```bash
+cp lang/en.sh lang/de.sh   # then translate the MSG_* and SPEED_* strings
+LANG=de_DE ./install.sh    # test
+```
 
-## 🛠️ Troubleshooting
+## 🗑️ Uninstallation
 
-*   **"Configuration Required" Error:** This happens when the theme is installed without using the script (`install.sh`). Run the installation script or set `isConfigured` to `true` in `Splash.qml` to fix it.
-*   **"'fastfetch' not found" Error:** `fastfetch` is not installed on your system. Install it using your distribution's package manager (e.g., `sudo pacman -S fastfetch` or `sudo apt install fastfetch`).
-*   **"'fastfetch' returned empty output" Error:** The command is running but not returning any output. Verify that `fastfetch` works correctly in your terminal.
-*   **Visual Glitches/Issues:** If effects (neon glow, glitch, etc.) are invisible, ensure that the `Qt5Compat.GraphicalEffects` package is installed.
+```bash
+rm -rf ~/.local/share/plasma/look-and-feel/fork-fastfetch-splash
+```
+
+Then pick another splash in System Settings.
+
+## 🤝 Contributing
+
+Contributions welcome — new layout modes, more installer languages, and bug fixes are all good PRs.
+
+1. Fork the repo
+2. Create your branch (`git checkout -b feature/amazing`)
+3. Commit (`git commit -m 'Add amazing feature'`)
+4. Push (`git push origin feature/amazing`)
+5. Open a Pull Request
 
 ## 📄 License
 
-Protected under the MIT License.
+MIT — see [LICENSE](LICENSE). Contains code from the upstream project by [herzane](https://github.com/herzane52), also MIT.
 
-## 🆚 About This Fork
+## 🙏 Acknowledgments
 
-This repository is a fork by **DeadIndian** making improvements to the original Fastfetch KDE Splash. It builds upon herzane's original work with additional features and fixes.
+- **[herzane52/fastfetch-kde-splash](https://github.com/herzane52/fastfetch-kde-splash)** — the original this fork builds on
+- **[fastfetch-cli/fastfetch](https://github.com/fastfetch-cli/fastfetch)** — the system info tool that powers the splash
 
-Forked from [herzane52/fastfetch-kde-splash](https://github.com/herzane52/fastfetch-kde-splash)
+---
+
+<div align="center">
+<sub>Built with ❤️ by <a href="https://github.com/DeadIndian">DeadIndian</a></sub>
+</div>
