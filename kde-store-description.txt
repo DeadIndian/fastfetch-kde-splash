@@ -1,5 +1,5 @@
 === ENGLISH ===
-Deads Fastfetch Splash Screen (Forked) v1.8
+Deads Fastfetch Splash Screen (Forked) v2.0
 
 A matrix-style splash screen for KDE Plasma that uses 'fastfetch' to display your real system info — decoded character by character with a glitch animation, in full color.
 
@@ -23,7 +23,7 @@ The splash works out of the box in logo mode. For full customization (color, lay
 GitHub Repository: https://github.com/DeadIndian/fastfetch-kde-splash
 
 === TÜRKÇE ===
-Deads Fastfetch Splash Screen (Forked) v1.8
+Deads Fastfetch Splash Screen (Forked) v2.0
 
 'fastfetch' aracını kullanarak gerçek sistem bilgilerinizi gösteren, tam renkli, karakter karakter çözülen glitch animasyonlu matris tarzı KDE Plasma açılış ekranı.
 

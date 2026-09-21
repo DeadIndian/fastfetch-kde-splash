@@ -9,6 +9,8 @@
 
 A fork of [herzane52/fastfetch-kde-splash](https://github.com/herzane52/fastfetch-kde-splash) that renders `fastfetch` output on your Plasma splash screen with a glitch character-reveal animation — and, unlike the original, **preserves your terminal's ANSI colors** (256-color and truecolor) exactly as fastfetch prints them.
 
+Latest release: **v2.0**
+
 [![License](https://img.shields.io/github/license/DeadIndian/fastfetch-kde-splash?style=flat-square)](LICENSE)
 [![Release](https://img.shields.io/github/v/release/DeadIndian/fastfetch-kde-splash?style=flat-square)](https://github.com/DeadIndian/fastfetch-kde-splash/releases)
 [![Stars](https://img.shields.io/github/stars/DeadIndian/fastfetch-kde-splash?style=flat-square)](https://github.com/DeadIndian/fastfetch-kde-splash/stargazers)

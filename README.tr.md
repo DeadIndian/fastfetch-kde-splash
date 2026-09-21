@@ -43,6 +43,8 @@ Durağan bir yüklenme göstergesi yerine, açılış ekranınız canlı `fastfe
 
 Bu fork, orijinalin üzerine iki büyük özellik ekler: **tam ANSI renk desteği** (açılış ekranı terminalinizdeki fastfetch renkleriyle birebir aynı görünür, 24-bit truecolor dahil) ve **sıralı (sequential) düzen modu** — logo ekranın ortasında çözülür, sola kayar, bilgi belirir. Ayrıca orijinalin v1.5'te kazandığı her şeyi de içerir: animasyon hız ayarları, sadece bilgi düzeni ve çok dilli kurulum sihirbazı.
 
+En son sürüm: **v2.0**
+
 ## ✨ Özellikler
 
 - **Gerçek ANSI renkleri** — standart 16, 256 renk ve 24-bit truecolor SGR dizileri olduğu gibi ayrıştırılır ve gösterilir; renkleri soyulmuş tek renk çıktı yok
