@@ -1,22 +1,20 @@
 {
-    "KPackageStructure": "Plasma/LookAndFeel",
-    "KPlugin": {
-        "Authors": [
-            {
-                "Email": "trkaraca@proton.me",
-                "Name": "DeadIndian",
-                "Website": "https://github.com/DeadIndian/fastfetch-kde-splash"
-            }
-        ],
-        "Category": "",
-        "Description": "My fork of Fastfetch KDE Splash Screen with enhanced features",
-        "Id": "fork-fastfetch-splash",
-        "License": "MIT",
-        "Name": "Deads Fastfetch Splash Screen Forked",
-        "Version": "1.8",
+  "KPackageStructure": "Plasma/LookAndFeel/Splash",
+  "KPlugin": {
+    "Authors": [
+      {
+        "Email": "trkaraca@proton.me",
+        "Name": "DeadIndian",
         "Website": "https://github.com/DeadIndian/fastfetch-kde-splash"
-    },
-    "Keywords": "Desktop;Workspace;Appearance;Look and Feel;Logout;Lock;Suspend;Shutdown;Hibernate;",
-    "X-Plasma-APIVersion": "2",
-    "X-Plasma-MainScript": "default"
+      }
+    ],
+    "Category": "",
+    "Description": "My fork of Fastfetch KDE Splash Screen with enhanced features",
+    "Id": "fork-fastfetch-splash",
+    "License": "MIT",
+    "Name": "Deads Fastfetch Splash Screen Forked",
+    "Version": "1.8",
+    "Website": "https://github.com/DeadIndian/fastfetch-kde-splash"
+  },
+  "X-Plasma-API": "6.0"
 }
