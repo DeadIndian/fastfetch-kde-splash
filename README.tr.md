@@ -94,6 +94,16 @@ Kurulum sihirbazı dört soru sorar — tema rengi, düzen, arka plan ve animasy
 
 **Etkinleştirme:** \*Sistem Ayarları → Görünüm → Açılış Ekranı → **fork-fastfetch-splash\*** → Uygula. Görmek için çıkış yapıp tekrar girin.
 
+### KDE Mağazası'ndan mı kurdunuz?
+
+Açılış ekranını **Sistem Ayarları → Açılış Ekranı → Yeni Açılış Ekranı Al** (veya [KDE Mağazası](https://store.kde.org/)) üzerinden aldıysanız, dosyalar zaten makinenizde — klonlamaya gerek yok. Tek komutla yerinde yapılandırın:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/DeadIndian/fastfetch-kde-splash/main/configure.sh | bash
+```
+
+Aynı dört soruyu sorar ve kurulu `Splash.qml` dosyasını doğrudan düzenler. Değişikliği görmek için açılış ekranını yeniden seçin (veya çıkış yapıp tekrar girin).
+
 ## 💻 Kullanım
 
 Günlük çalıştırılacak bir şey yok — açılış ekranı oturum açılışında devreye girer. Değişiklikleri görmek için çıkış yapıp tekrar girin.
@@ -128,6 +138,12 @@ Kurulumu istediğiniz zaman yeniden çalıştırın:
 
 ```bash
 ./install.sh
+```
+
+KDE Mağazası'ndan mı kurdunuz? Bunun yerine yerinde yapılandırıcıyı çalıştırın:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/DeadIndian/fastfetch-kde-splash/main/configure.sh | bash
 ```
 
 Ya da kurulu QML dosyasını doğrudan düzenleyin:

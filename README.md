@@ -101,6 +101,16 @@ The installer walks you through four questions — theme color, layout, backgrou
 
 **Activate it:** \*System Settings → Appearance → Splash Screen → **fork-fastfetch-splash\*** → Apply. Log out and back in to see it.
 
+### Installed from the KDE Store?
+
+If you got the splash through **System Settings → Splash Screen → Get New Splash Screens** (or the [KDE Store](https://store.kde.org/)), the files are already on your machine — no need to clone anything. Configure it in place with one command:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/DeadIndian/fastfetch-kde-splash/main/configure.sh | bash
+```
+
+It asks the same four questions and edits the installed `Splash.qml` directly. Re-select the splash (or log out and back in) to see the change.
+
 ## 💻 Usage
 
 There's nothing to run day-to-day — the splash activates at login. To preview changes, just log out and back in.
@@ -135,6 +145,12 @@ Re-run the installer any time:
 
 ```bash
 ./install.sh
+```
+
+Installed from the KDE Store? Re-run the in-place configurator instead:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/DeadIndian/fastfetch-kde-splash/main/configure.sh | bash
 ```
 
 Or edit the installed QML directly:
