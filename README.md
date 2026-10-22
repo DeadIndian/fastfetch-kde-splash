@@ -23,7 +23,7 @@ Latest release: **v2.0**
 [Report Bug](https://github.com/DeadIndian/fastfetch-kde-splash/issues)
 
 <p>
-  <img src="assets/screenshots/hero.gif" alt="Fastfetch KDE Splash in action" width="80%" />
+  <img src="assets/screenshots/store-hero.png" alt="Fastfetch KDE Splash — Arch logo in full ANSI color" width="80%" />
 </p>
 
 </div>
